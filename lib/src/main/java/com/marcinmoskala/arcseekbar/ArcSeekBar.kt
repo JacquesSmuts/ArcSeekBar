@@ -32,7 +32,7 @@ class ArcSeekBar @JvmOverloads constructor(
             invalidate()
         }
 
-    var progress: Int = a.useOrDefault(0) { getInteger(R.styleable.ArcSeekBar_progress, it) }
+    var progress: Int = a.useOrDefault(0) { getInteger(R.styleable.ArcSeekBar_progressValue, it) }
         set(progress) {
             field = bound(0, progress, maxProgress)
             onProgressChangedListener?.invoke(progress)
@@ -90,6 +90,14 @@ class ArcSeekBar @JvmOverloads constructor(
             width = progressWidth
     )
 
+    private var progressBackgroundTextPaint: Paint = makeProgressTextPaint(
+        color = a.useOrDefault(resources.getColor(android.R.color.darker_gray)) { getColor(R.styleable.ArcSeekBar_progressBackgroundColor, it) }
+    )
+
+    private var progressTextPaint: Paint = makeProgressTextPaint(
+        color = a.useOrDefault(resources.getColor(android.R.color.holo_blue_light)) { getColor(R.styleable.ArcSeekBar_progressColor, it) }
+    )
+
     private var mEnabled = a?.getBoolean(R.styleable.ArcSeekBar_enabled, true) ?: true
 
     init {
@@ -112,8 +120,19 @@ class ArcSeekBar @JvmOverloads constructor(
 
     override fun onDraw(canvas: Canvas) {
         drawData?.run {
+
+            canvas.drawLine(thirdXStart, thirdYStart, thirdXEnd, thirdYEnd, if (progress >= 33) progressPaint else progressBackgroundPaint)
+            canvas.drawLine(twoThirdXStart, twothirdYStart, twothirdXEnd, twothirdYEnd, if (progress >= 67) progressPaint else progressBackgroundPaint)
+
             canvas.drawArc(arcRect, startAngle, sweepAngle, false, progressBackgroundPaint)
             canvas.drawArc(arcRect, startAngle, progressSweepAngle, false, progressPaint)
+
+            canvas.drawText("0", zeroXText, zeroYText, progressTextPaint)
+            canvas.drawText("1", thirdXText, thirdYText, if (progress >= 33) progressTextPaint else progressBackgroundTextPaint)
+            canvas.drawText("2", twoThirdXText, twoThirdYText, if (progress >= 67) progressTextPaint else progressBackgroundTextPaint)
+            canvas.drawText("3", endXText, endYText, if (progress >= 100) progressTextPaint else progressBackgroundTextPaint)
+
+
             if (mEnabled) drawThumb(canvas)
         }
     }
@@ -184,6 +203,12 @@ class ArcSeekBar @JvmOverloads constructor(
         style = Paint.Style.STROKE
         strokeWidth = width
         if (roundedEdges) strokeCap = Paint.Cap.ROUND
+    }
+
+    private fun makeProgressTextPaint(color: Int) = Paint().apply {
+        this.color = color
+        isAntiAlias = true
+        textSize = 50f
     }
 
     private fun updateOnTouch(event: MotionEvent) {
