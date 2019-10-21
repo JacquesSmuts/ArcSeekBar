@@ -44,10 +44,10 @@ internal data class ArcSeekBarData(
     val thirdXText: Float =  ((r+40) * Math.cos(alphaRad + Math.PI / 2 - thirdRad).toFloat() + circleCenterX) - 20f
     val thirdYText: Float =  ((-r-40) * Math.sin(alphaRad + Math.PI / 2 - thirdRad).toFloat() + circleCenterY)
 
-    val twoThirdXText: Float =  ((r+40) * Math.cos(alphaRad + Math.PI / 2 - twoThirdRad).toFloat() + circleCenterX) - 20f
+    val twoThirdXText: Float =  ((r+40) * Math.cos(alphaRad + Math.PI / 2 - twoThirdRad).toFloat() + circleCenterX)
     val twoThirdYText: Float =  ((-r-40) * Math.sin(alphaRad + Math.PI / 2 - twoThirdRad).toFloat() + circleCenterY)
 
-    val endXText: Float =  ((r) * Math.cos(alphaRad + Math.PI / 2 - endRad).toFloat() + circleCenterX)
+    val endXText: Float =  ((r) * Math.cos(alphaRad + Math.PI / 2 - endRad).toFloat() + circleCenterX) - 20f
     val endYText: Float =  ((-r) * Math.sin(alphaRad + Math.PI / 2 - endRad).toFloat() + circleCenterY) + 70f
 
     fun progressFromClick(x: Float, y: Float, thumbHeight: Int): Int? {
