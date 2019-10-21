@@ -53,9 +53,15 @@ internal data class ArcSeekBarData(
     fun progressFromClick(x: Float, y: Float, thumbHeight: Int): Int? {
         if (y > height + dy * 2) return null
         val distToCircleCenter = Math.sqrt(Math.pow(circleCenterX - x.toDouble(), 2.0) + Math.pow(circleCenterY - y.toDouble(), 2.0))
-        if (Math.abs(distToCircleCenter - r) > thumbHeight) return null
+        if (Math.abs(distToCircleCenter - r) > (thumbHeight+120)) return null
         val innerWidthHalf = width / 2
         val xFromCenter = bound(-innerWidthHalf, x - circleCenterX, innerWidthHalf).toDouble()
+
+        if ((r + xFromCenter) < 15) {
+            return 0
+        } else if (r - xFromCenter < 15)
+            return maxProgress
+
         val touchAngle = Math.acos(xFromCenter / r) + alphaRad - Math.PI / 2
         val angleToMax = 1.0 - touchAngle / (2 * alphaRad)
         return bound(0, ((maxProgress + 1) * angleToMax).toInt(), maxProgress)
