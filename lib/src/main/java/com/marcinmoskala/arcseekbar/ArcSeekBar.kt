@@ -40,6 +40,8 @@ class ArcSeekBar @JvmOverloads constructor(
             invalidate()
         }
 
+    private var mTextSize = a.useOrDefault(4 * context.resources.displayMetrics.density) { getDimension(R.styleable.ArcSeekBar_textSize, it) }
+
     var progressWidth: Float = a.useOrDefault(4 * context.resources.displayMetrics.density) { getDimension(R.styleable.ArcSeekBar_progressWidth, it) }
         set(value) {
             field = value
@@ -208,7 +210,7 @@ class ArcSeekBar @JvmOverloads constructor(
     private fun makeProgressTextPaint(color: Int) = Paint().apply {
         this.color = color
         isAntiAlias = true
-        textSize = 50f
+        textSize = mTextSize
     }
 
     private fun updateOnTouch(event: MotionEvent) {
