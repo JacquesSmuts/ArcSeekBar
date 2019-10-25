@@ -40,6 +40,8 @@ class ArcSeekBar @JvmOverloads constructor(
             invalidate()
         }
 
+    val padding: Float = a.useOrDefault(0f) { getDimension(R.styleable.ArcSeekBar_paddingSides, it)}
+
     private var mTextSize = a.useOrDefault(4 * context.resources.displayMetrics.density) { getDimension(R.styleable.ArcSeekBar_textSize, it) }
 
     var progressWidth: Float = a.useOrDefault(4 * context.resources.displayMetrics.density) { getDimension(R.styleable.ArcSeekBar_progressWidth, it) }
@@ -154,7 +156,7 @@ class ArcSeekBar @JvmOverloads constructor(
         val dy = maxOf(thumb.intrinsicHeight.toFloat() / 2, this.progressWidth) + 2
         val realWidth = width.toFloat() - 2 * dx - paddingLeft - paddingRight
         val realHeight = minOf(height.toFloat() - 2 * dy - paddingTop - paddingBottom, realWidth / 2)
-        drawData = ArcSeekBarData(dx + paddingLeft, dy + paddingTop, realWidth, realHeight, progress, maxProgress)
+        drawData = ArcSeekBarData(dx + padding, dy + padding, realWidth, realHeight, progress, maxProgress)
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
     }
 

@@ -11,5 +11,6 @@
         <attr name="roundEdges" format="boolean" />
         <attr name="enabled" format="boolean" />
         <attr name="textSize" format="dimension" />
+        <attr name="paddingSides" format="dimension" />
     </declare-styleable>
 </resources>

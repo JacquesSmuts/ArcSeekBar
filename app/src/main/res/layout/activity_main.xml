@@ -30,9 +30,9 @@
         android:padding="20dp" />
 
     <com.marcinmoskala.arcseekbar.ArcSeekBar
-        android:layout_width="300dp"
+        android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_margin="20dp"
-        android:padding="20dp" />
+        app:paddingSides="20dp"/>
 
 </LinearLayout>
